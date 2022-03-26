@@ -1,47 +1,29 @@
 public abstract class User {
 
-    protected String firstName;
-    protected String lastName;
-    protected static int count = 1;
-    protected int libraryCardIndex;
-    protected char isStudentOrLecturer;
 
+    private String firstName;
+    private String lastName;
+    private static int count = 1;
+    private int libraryCardIndex;
+    private String isStudentOrLecturer;
+
+    public String getIsStudentOrLecturer() {
+
+        if (getIsStudentOrLecturer() == "S") {
+            isStudentOrLecturer = "S";}
+        else if (getIsStudentOrLecturer() == "L") {isStudentOrLecturer = "L";}
+            return isStudentOrLecturer;
+        }
 
     public User(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
         libraryCardIndex = count++;
-
     }
 
-    public String getFirstName() {
-        return firstName;
+    public void displayUserInformation() {
+        System.out.println(firstName + ";" + lastName + ";" + libraryCardIndex + ";" + setIsStudentOrLecturer());
     }
 
-    public String getLastName() {
-        return lastName;
-    }
-
-    public int getLibraryCardIndex() {
-        return libraryCardIndex;
-    }
-
-    public char isStudentOrLecturer() {
-        return isStudentOrLecturer;
-    }
-
-    public abstract boolean isLimitReached();
-
-
-
-
-    public void User1(String fN, String lN) {
-        this.firstName = fN;
-        this.lastName = lN;
-        libraryCardIndex = count++;
-
-    }}
-
-
-
-
+    protected abstract String setIsStudentOrLecturer();
+}

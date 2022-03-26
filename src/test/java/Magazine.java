@@ -1,8 +1,18 @@
-public class Magazine extends Item{
-        private String number;
+public class Magazine extends Item {
 
-    public Magazine (String title, String number){
+    private int number;
+
+    public Magazine(String title, int number) {
         super(title);
         this.number = number;
+
+
     }
-}
+
+
+    }
+
+
+
+
+
