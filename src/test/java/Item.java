@@ -4,16 +4,13 @@ import java.util.Objects;
 
 public class Item implements Comparator<Item> {
 
-    protected String title;
+    public String title;
 
     public Item(String title) {
         this.title = title;
     }
 
-    @Override
-    public int compare(Item o1, Item o2) {
-        return o1.title.compareTo(o2.title);
-    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -32,7 +29,10 @@ public class Item implements Comparator<Item> {
         return title;
     }
 
-
+    @Override
+    public int compare(Item o1, Item o2) {
+        return o1.title.compareTo(o2.title);
+    }
 }
 
 

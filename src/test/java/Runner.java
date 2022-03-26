@@ -1,6 +1,10 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.Collectors;
+
+
 
 public class Runner {
 
@@ -19,29 +23,90 @@ public class Runner {
         else if (user instanceof Student) System.out.println(true);
 
 
-        ArrayList<Item> arr = new ArrayList<>();
-        Library items = new Library();
+        Library itemss = new Library();
 
-        items.addItemToLibrary(new Book("Ogniem i mieczem", "Henryk Sienkiewicz"));
-        items.addItemToLibrary(new Book("Ogniem i mieczem", "Henryk Sienkiewicz"));
-        items.addItemToLibrary(new Book("Ogniem i mieczem", "Henryk Sienkiewicz"));
-        items.addItemToLibrary(new Book("Harry Potter. Czara Ognia", "J.K. Rowling"));
-        items.addItemToLibrary(new Book("Harry Potter. Czara Ognia", "J.K. Rowling"));
-        items.addItemToLibrary(new Book("Lśnienie", "S. King"));
-        items.addItemToLibrary(new Magazine("Kobiety kodują", "1/2020"));
-        items.addItemToLibrary(new Magazine("Kobiety kodują", "2/2021"));
-        items.printListOfBooks();
-        items.printListOfMagazines();
+        itemss.addItemToLibrary(new Book("Ogniem i mieczem", "Henryk Sienkiewicz"));
+        itemss.addItemToLibrary(new Book("Harry Potter. Czara Ognia", "J.K. Rowling"));
+        itemss.addItemToLibrary(new Book("Harry Potter. Czara Ognia", "J.K. Rowling"));
+        itemss.addItemToLibrary(new Book("Lśnienie", "S. King"));
+        itemss.addItemToLibrary(new Magazine("Kobiety kodują", "1/2020"));
+        itemss.addItemToLibrary(new Magazine("Kobiety kodują", "1/2020"));
+        itemss.addItemToLibrary(new Magazine("Think Like A MAN", "6/2022"));
+        itemss.printListOfBooks();
+        itemss.printListOfMagazines();
 
-        Set<Item> set = arr.stream().collect(Collectors.toSet());
 
-             set.forEach(Item -> System.out.println(Item));
+        ArrayList<Item> book = new ArrayList<>();
+        book.add(new Book("Ogniem i mieczem", "Henryk Sienkiewicz"));
+        book.add(new Book("Harry Potter. Czara Ognia", "J.K. Rowling"));
+        book.add(new Book("Harry Potter. Czara Ognia", "J.K. Rowling"));
+        book.add(new Book("Lśnienie", "S. King"));
+        Map<Object, Long> counts = book.stream().collect(Collectors.groupingBy(item -> item.title, Collectors.counting()));
+        System.out.println(counts);
+
+        ArrayList<Item> magazine = new ArrayList<>();
+        magazine.add(new Magazine("Kobiety kodują", "1/2020"));
+        magazine.add(new Magazine("Kobiety kodują", "1/2020"));
+        magazine.add(new Magazine("Think Like A MAN", "6/2022"));
+
+        Map<Object, Long> counts1 = magazine.stream().collect(Collectors.groupingBy(item -> item.title, Collectors.counting()));
+        System.out.println(counts1);
+
+
+
     }
-}
 
-       /* Map<Item, Integer> itemMap = Items.stream().collect(Collectors.toMap(s), Collectors.counting()));
-        System.out.println(itemMap);
-*/
+public class Pliki {
+
+    public static void main(String[] args) {
+
+        String csvFile = "csvFile.txt";
+
+        exportUsersWithItemsToFile(csvFile);
+
+        String odczytanyTekst = exportUsersWithItemsToFile(csvFile);
+
+        System.out.println("Odczytany tekst:\n" + odczytanyTekst);
+    }
+
+    public static String exportUsersWithItemsToFile (String csvFile) {
+
+        try {
+
+            PrintWriter out = new PrintWriter(csvFile);
+
+            out.println("Raz");
+            out.println("Dwa");
+            out.println("Trzy");
+
+            out.close();
+
+        } catch (FileNotFoundException ex) {
+            System.out.println("Niestety, nie mogę utworzyć pliku!");
+        }
+        return csvFile;
+    }
+
+    public static String importItemsFromFile(String csvFile) {
+
+        File plikDane = new File(csvFile);
+
+        String odczyt = "";
+        try {
+
+            Scanner skaner = new Scanner(plikDane);
+
+            while (skaner.hasNextLine()) {
+
+                odczyt = odczyt + skaner.nextLine() + "\n";
+            }
+
+        } catch (FileNotFoundException e) {
+            System.out.println("Brak Pliku do odczytania!");
+        }
+        return odczyt;
+    }
+}}
 
 
 /* Item book = new Book("Ogniem i mieczem", "Henryk Sienkiewicz");

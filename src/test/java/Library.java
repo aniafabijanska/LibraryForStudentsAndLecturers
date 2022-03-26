@@ -1,8 +1,9 @@
 
+import java.io.*;
 import java.util.ArrayList;
 
 import java.util.List;
-
+import java.util.Scanner;
 
 
 public class Library {
@@ -28,10 +29,10 @@ public class Library {
             this.items.add(item);
         }
     }
+
     public void printListOfBooks() {
         for (Item item : items
-        )
-        {
+        ) {
             if (item instanceof Book)
                 System.out.println(item.getTitle() + ";" + ((Book) item).getAuthor() + ";");
         }
@@ -39,7 +40,7 @@ public class Library {
     }
 
     public void printListOfMagazines() {
-        for (Item item: items
+        for (Item item : items
         ) {
             if (item instanceof Magazine)
                 System.out.println(item.getTitle() + ";" + ((Magazine) item).getNumber() + ";");
@@ -49,19 +50,14 @@ public class Library {
 
     public boolean rentItemToUser(Item item, User user) {
         return false;
-    }
-
-    public void importItemsFromFile(String csvFile){
-
-    }
-
-    public void exportUsersWithItemsToFile(String csvFile){
-
-    }
+    }}
 
 
 
-}
+
+
+
+
 
 
 
