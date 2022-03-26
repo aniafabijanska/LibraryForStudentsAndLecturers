@@ -1,8 +1,8 @@
 public class Magazine extends Item {
 
-    private int number;
+    private String number;
 
-    public Magazine(String title, int number) {
+    public Magazine(String title, String number) {
         super(title);
         this.number = number;
 
@@ -10,7 +10,10 @@ public class Magazine extends Item {
     }
 
 
+    public String getNumber() {
+        return number;
     }
+}
 
 
 
