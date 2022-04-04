@@ -1,29 +1,50 @@
+
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class User {
 
+    protected String firstName;
+    protected String lastName;
+    protected static int count=0;
+    protected int libraryCardIndex;
+    protected char isStudentOrLecturer;
 
-    private String firstName;
-    private String lastName;
-    private static int count = 1;
-    private int libraryCardIndex;
-    private String isStudentOrLecturer;
-
-    public String getIsStudentOrLecturer() {
-
-        if (getIsStudentOrLecturer() == "S") {
-            isStudentOrLecturer = "S";}
-        else if (getIsStudentOrLecturer() == "L") {isStudentOrLecturer = "L";}
-            return isStudentOrLecturer;
-        }
+    protected List<Item> rentedItems = new ArrayList<>();
+    protected int rentItemsLimit;
 
     public User(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
-        libraryCardIndex = count++;
+        libraryCardIndex=count++;
     }
 
-    public void displayUserInformation() {
-        System.out.println(firstName + ";" + lastName + ";" + libraryCardIndex + ";" + setIsStudentOrLecturer());
+    public String getFirstName() {
+        return firstName;
     }
 
-    protected abstract String setIsStudentOrLecturer();
+    public String getLastName() {
+        return lastName;
+    }
+
+    public int getLibraryCardIndex() {
+        return libraryCardIndex;
+    }
+
+    public char isStudentOrLecturer() {
+        return isStudentOrLecturer;
+    }
+
+    public boolean canRent()
+    {
+        if(rentedItems.stream().count() <rentItemsLimit)
+            return true;
+        else return false;
+    }
+
+    public void rent(Item item)
+    {
+        rentedItems.add(item);
+    }
+
 }
