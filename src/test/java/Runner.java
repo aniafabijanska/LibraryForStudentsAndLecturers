@@ -1,7 +1,4 @@
 import java.io.FileNotFoundException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -25,14 +22,15 @@ public class Runner {
         User lecturer = new Lecturer("Asia", "Kowalska");
         User lecturer1 = new Lecturer("Magda", "Kowalska");
 
-        library.addUserToLibraryTest(user, student1,student2, lecturer, lecturer1);
-        library.printListOfUsers();
+        library.addUserToLibraryTest(user, student1, student2, lecturer, lecturer1);
+        //library.printListOfUsers();
 
-        if (user instanceof Lecturer) System.out.println(false);
-        else if (user instanceof Student) System.out.println(true);
+        //if (user instanceof Lecturer) System.out.println(false);
+      //  else if (user instanceof Student) System.out.println(true);
+
 
         System.out.println("");
-
+        importItemsFromFile("ItemList.txt");
         library.addItemToLibrary(new Book("Potop", "H. Sienkiewicz"));
         library.addItemToLibrary(new Book("Potop", "H. Sienkiewicz"));
         library.addItemToLibrary(new Book("Ogniem i mieczem", "H. Sienkiewicz"));
@@ -50,26 +48,19 @@ public class Runner {
         library.countItemsFromList();
         library.RemoveDuplicatesTwoList();
 
-        library.rentItemToUser(library.getUserList().get(0), library.getItems().get(2));
-        library.rentItemToUser(library.getUserList().get(0), library.getItems().get(3));
-        library.rentItemToUser(library.getUserList().get(1), library.getItems().get(3));
-        library.rentItemToUser(library.getUserList().get(1), library.getItems().get(4));
-        library.rentItemToUser(library.getUserList().get(1), library.getItems().get(0));
-        library.rentItemToUser(library.getUserList().get(1), library.getItems().get(0));
-        library.rentItemToUser(library.getUserList().get(3), library.getItems().get(0));
-        library.rentItemToUser(library.getUserList().get(3), library.getItems().get(3));
-        library.rentItemToUser(library.getUserList().get(3), library.getItems().get(8));
-        library.rentItemToUser(library.getUserList().get(3), library.getItems().get(8));
-        library.rentItemToUser(library.getUserList().get(4), library.getItems().get(8));
-        library.rentItemToUser(library.getUserList().get(4), library.getItems().get(10));
-        library.rentItemToUser(library.getUserList().get(2), library.getItems().get(10));
-        library.rentItemToUser(library.getUserList().get(2), library.getItems().get(10));
-        library.rentItemToUser(library.getUserList().get(2), library.getItems().get(0));
-        library.rentItemToUser(library.getUserList().get(2), library.getItems().get(0));
-        library.rentItemToUser(library.getUserList().get(2), library.getItems().get(0));
-        library.rentItemToUser(library.getUserList().get(2), library.getItems().get(0));
+
+
 
         importItemsFromFile("ItemList.txt");
+
+        library.rentItemToUser(library.getUserList().get(0), library.getItems().get(0));
+        library.rentItemToUser(library.getUserList().get(0), library.getItems().get(3));
+        library.rentItemToUser(library.getUserList().get(1), library.getItems().get(3));
+        library.rentItemToUser(library.getUserList().get(1), library.getItems().get(1));
+        library.rentItemToUser(library.getUserList().get(1), library.getItems().get(1));
+        library.rentItemToUser(library.getUserList().get(3), library.getItems().get(1));
+        library.rentItemToUser(library.getUserList().get(3), library.getItems().get(4));
+
 
         System.out.println(" ");
         library.printListOfUsers();
@@ -97,15 +88,14 @@ public class Runner {
         }
     }
 
-    public static void exportUsersWithItemsToFile(String csvFile)
-    {
+    public static void exportUsersWithItemsToFile(String csvFile) {
         library.getUserList();
 
         try {
             FileWriter myWriter = new FileWriter(csvFile);
             for (User user : library.getUserList()) {
-                if(!library.exportUsersWithItemsToFile(user).equals(""))
-                    myWriter.write(library.exportUsersWithItemsToFile(user)+ "\r\n");
+                if (!library.exportUsersWithItemsToFile(user).equals(""))
+                    myWriter.write(library.exportUsersWithItemsToFile(user) + "\r\n");
             }
             myWriter.close();
 
@@ -115,8 +105,7 @@ public class Runner {
         }
     }
 
-    public static void importItemsFromFile(String csvFile)
-    {
+    public static void importItemsFromFile(String csvFile) {
         try {
             File myObj = new File(csvFile);
             Scanner myReader = new Scanner(myObj);
@@ -134,10 +123,9 @@ public class Runner {
         }
     }
 
-    public static void importItemsFromFile(String[]lines)
-    {
+    public static void importItemsFromFile(String[] lines) {
         String title = lines[0];
-        Boolean isItemOnList=false;
+        Boolean isItemOnList = false;
 
         if (lines[3].charAt(0) == 'B') {
             String author = lines[1];
@@ -145,44 +133,44 @@ public class Runner {
 
             Book book = new Book(title, author);
 
+
+            library.addItemToLibrary(book);
+
+
             for (Map.Entry<Item, ItemAmountDetails> entry : library.itemsHashMap().entrySet()) {
-                if(library.isSameEntry(entry.getKey(),book ))
-                {
+                if (library.isSameEntry(entry.getKey(), book)) {
                     entry.getValue().increaseQuantity(quantity);
-                    isItemOnList=true;
+                    isItemOnList = true;
                     break;
                 }
             }
-            if(!isItemOnList)
-            {
-                ItemAmountDetails itemDetails = new ItemAmountDetails(quantity,quantity);
-                library.itemsHashMap().put(book,itemDetails);
+            if (!isItemOnList) {
+                library.getItemsCounts().add(quantity);
+                ItemAmountDetails itemDetails = new ItemAmountDetails(quantity, quantity);
+                library.itemsHashMap().put(book, itemDetails);
             }
-        }
-        else if (lines[3].charAt(0) == 'M') {
+        } else if (lines[3].charAt(0) == 'M') {
             String number = lines[1];
             int quantity = Integer.valueOf(lines[2]);
 
             Magazine magazine = new Magazine(title, number);
 
+            library.addItemToLibrary(magazine);
+
             for (Map.Entry<Item, ItemAmountDetails> entry : library.itemsHashMap().entrySet()) {
-                if (library.isSameEntry(entry.getKey(), magazine))
-                {
+                if (library.isSameEntry(entry.getKey(), magazine)) {
                     entry.getValue().increaseQuantity(quantity);
-                    isItemOnList=true;
+                    isItemOnList = true;
                     break;
                 }
             }
-            if(!isItemOnList)
-            {
+            if (!isItemOnList) {
+                library.getItemsCounts().add(quantity);
                 ItemAmountDetails itemDetails = new ItemAmountDetails(quantity, quantity);
                 library.itemsHashMap().put(magazine, itemDetails);
             }
-        }
-        else {
+        } else {
             System.out.println("Błędny plik");
         }
     }
-
 }
-
