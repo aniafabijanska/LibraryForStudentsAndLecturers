@@ -23,10 +23,10 @@ public class Runner {
         User lecturer1 = new Lecturer("Magda", "Kowalska");
 
         library.addUserToLibraryTest(user, student1, student2, lecturer, lecturer1);
-        //library.printListOfUsers();
+
 
         //if (user instanceof Lecturer) System.out.println(false);
-      //  else if (user instanceof Student) System.out.println(true);
+        //else if (user instanceof Student) System.out.println(true);
 
 
         System.out.println("");
@@ -47,8 +47,6 @@ public class Runner {
 
         library.countItemsFromList();
         library.RemoveDuplicatesTwoList();
-
-
 
 
         importItemsFromFile("ItemList.txt");
