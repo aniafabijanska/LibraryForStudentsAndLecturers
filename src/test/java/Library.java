@@ -7,9 +7,9 @@ public class Library {
     private List<Integer> itemsCounts = new ArrayList<>();
     private  List<ItemAmountDetails> itemAmountDetailsAmount = new ArrayList<>();
     private Map<Item,ItemAmountDetails> itemsHashMap=new HashMap<>();
-    private Map<Item,Integer> itemsHashMapWithNoDuplicates = new HashMap();
 
-    //GETTERS
+
+
     public List<User> getUserList() {
         return users;
     }
@@ -64,7 +64,7 @@ public class Library {
             }
         }
     }
-
+    public List<Integer> getItemsCounts() {return itemsCounts;}
     public boolean isSameEntry(Item itemChecked, Item itemOther)
     {
         if(itemChecked.getTitle().equals(itemOther.getTitle()))
