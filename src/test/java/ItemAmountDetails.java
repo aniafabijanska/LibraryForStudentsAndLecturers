@@ -24,12 +24,6 @@ public class ItemAmountDetails {
         this.currentQuantity--;
     }
 
-    void increaseCurrentQuantity() {
-        this.currentQuantity++;
-        if(currentQuantity>totalQuantity)
-            this.totalQuantity++;
-    }
-
     void increaseQuantity() {
         this.currentQuantity++;
         this.totalQuantity++;

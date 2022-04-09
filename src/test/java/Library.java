@@ -1,92 +1,50 @@
 import java.util.*;
+import java.util.Collections;
 
 public class Library {
 
     private List<User> users = new ArrayList<>();
-    private List<Item> items = new ArrayList<>();
-    private List<Integer> itemsCounts = new ArrayList<>();
-    private  List<ItemAmountDetails> itemAmountDetailsAmount = new ArrayList<>();
-    private Map<Item,ItemAmountDetails> itemsHashMap=new HashMap<>();
+    private Map<Item,ItemAmountDetails> itemsAmountDetailsMap =new HashMap<>();
 
-
-
+    //GETTERS
     public List<User> getUserList() {
         return users;
     }
-    public List<Item> getItems() {
-        return items;
-    }
-    public Map<Item,ItemAmountDetails> itemsHashMap() {
-        return itemsHashMap;}
 
-    public void addUserToLibraryTest(User... users) {
-        for (User user : users) {
-            this.users.add(user);
-        }
+    public Map<Item,ItemAmountDetails> itemsAmountDetailsMap() {
+        return itemsAmountDetailsMap;}
+
+    public void addUserToLibrary(User... users) {
+        Collections.addAll(this.users, users);
     }
+
     public void addItemToLibrary (Item... items){
-        for (Item item : items) {
-            this.items.add(item);
-        }
-    }
 
-    public void countItemsFromList()
-    {
-        int occurrences=0;
-        for(Item ItemChecked : items) {
-
-            for(Item otherItem : items) {
-                if(isSameEntry(otherItem,ItemChecked))
-                    occurrences++;
-            }
-            ItemAmountDetails itemDetails = new ItemAmountDetails(occurrences, occurrences);
-            itemAmountDetailsAmount.add(itemDetails);
-            occurrences=0;
-        }
-    }
-
-    public void RemoveDuplicatesTwoList()
-    {
-        for (int i=0; i<items.stream().count();i++)
+        for (Item item: items)
         {
-            boolean firstTime=true;
-
-            for (int j=0; j<items.stream().count();j++)
-            {
-                if(isSameEntry(items.get(i), items.get(j)))
-                {
-                    if(firstTime)
-                    {
-                        itemsHashMap.put(items.get(j),itemAmountDetailsAmount.get(j));
-                        firstTime=false;
-                    }
-                }
-            }
-        }
-    }
-    public List<Integer> getItemsCounts() {return itemsCounts;}
-    public boolean isSameEntry(Item itemChecked, Item itemOther)
-    {
-        if(itemChecked.getTitle().equals(itemOther.getTitle()))
-        {
-            if(itemChecked instanceof Magazine && itemOther instanceof  Magazine)
-            {
-                if(((Magazine) itemChecked).getNumber().equals(((Magazine) itemOther).getNumber()))
-                    return true;
-                else return false;
-            }
-
-            else if(itemChecked instanceof Book && itemOther instanceof  Book){
-                if(((Book) itemChecked).getAuthor().equals(((Book) itemOther).getAuthor()))
-                    return true;
-                else return false;
+            if(itemsAmountDetailsMap.size() == 0) {
+                ItemAmountDetails itemDetails = new ItemAmountDetails();
+                itemsAmountDetailsMap.put(item, itemDetails);
             }
             else
-                return false;
-        }
-        else
-        {
-            return false;
+            {
+                boolean isItemInMap=false;
+                for (Map.Entry<Item, ItemAmountDetails> entry : itemsAmountDetailsMap.entrySet())
+                {
+                    if(entry.getKey().equals(item))
+                    {
+                        entry.getValue().increaseQuantity();
+                        isItemInMap=true;
+                        break;
+                    }
+                }
+                if(!isItemInMap)
+                {
+                    ItemAmountDetails itemDetails = new ItemAmountDetails();
+                    itemsAmountDetailsMap.put(item, itemDetails);
+                }
+            }
+
         }
     }
 
@@ -94,12 +52,12 @@ public class Library {
 
         if (canRent(item, user)) {
             user.rent(item);
-            itemsHashMap.get(convertItemFromListToHashMap(item)).decreaseCurrentQuantity();
+            itemsAmountDetailsMap.get(item).decreaseCurrentQuantity();
         }
     }
 
     private boolean canBeRented(Item item) {
-        return (itemsHashMap.get(convertItemFromListToHashMap(item)).getCurrentQuantity()>0);
+        return (itemsAmountDetailsMap.get(item).getCurrentQuantity()>0);
     }
 
     private boolean canRent(Item item, User user) {
@@ -107,8 +65,8 @@ public class Library {
     }
 
     public Item convertItemFromListToHashMap(Item item) {
-        for (Map.Entry<Item, ItemAmountDetails> entry : itemsHashMap.entrySet()) {
-            if(isSameEntry(entry.getKey(),item ))
+        for (Map.Entry<Item, ItemAmountDetails> entry : itemsAmountDetailsMap.entrySet()) {
+            if(entry.getKey().equals(item))
             {
                 return entry.getKey();
             }
@@ -120,7 +78,7 @@ public class Library {
 
     public void printListOfMagazines() {
 
-        for(Map.Entry<Item, ItemAmountDetails> entry : itemsHashMap.entrySet()) {
+        for(Map.Entry<Item, ItemAmountDetails> entry : itemsAmountDetailsMap.entrySet()) {
             Item item = entry.getKey();
             Integer currentQuantity = entry.getValue().getCurrentQuantity();
             Integer totalQuantity = entry.getValue().getTotalQuantity();
@@ -134,7 +92,7 @@ public class Library {
 
     public void printListOfBooks() {
 
-        for(Map.Entry<Item, ItemAmountDetails> entry : itemsHashMap.entrySet()) {
+        for(Map.Entry<Item, ItemAmountDetails> entry : itemsAmountDetailsMap.entrySet()) {
             Item item = entry.getKey();
             Integer currentQuantity = entry.getValue().getCurrentQuantity();
             Integer totalQuantity = entry.getValue().getTotalQuantity();
