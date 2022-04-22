@@ -5,7 +5,7 @@ public abstract class User {
 
     protected String firstName;
     protected String lastName;
-    protected static int count=0;
+    protected static int count = 0;
     protected int libraryCardIndex;
     protected char isStudentOrLecturer;
 
@@ -15,7 +15,7 @@ public abstract class User {
     public User(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
-        libraryCardIndex=count++;
+        libraryCardIndex = count++;
     }
 
     public String getFirstName() {
@@ -34,15 +34,13 @@ public abstract class User {
         return isStudentOrLecturer;
     }
 
-    public boolean canRent()
-    {
-        if(rentedItems.stream().count() <rentItemsLimit)
+    public boolean canRent() {
+        if (rentedItems.stream().count() < rentItemsLimit)
             return true;
         else return false;
     }
 
-    public void rent(Item item)
-    {
+    public void rent(Item item) {
         rentedItems.add(item);
     }
 

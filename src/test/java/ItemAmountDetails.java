@@ -30,7 +30,7 @@ public class ItemAmountDetails {
     }
 
     void increaseQuantity(int amount) {
-        this.currentQuantity +=amount;
-        this.totalQuantity+=amount;
+        this.currentQuantity += amount;
+        this.totalQuantity += amount;
     }
 }

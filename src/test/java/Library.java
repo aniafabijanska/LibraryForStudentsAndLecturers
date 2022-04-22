@@ -9,42 +9,36 @@ import java.util.regex.Pattern;
 public class Library {
 
     private List<User> users = new ArrayList<>();
-    private Map<Item,ItemAmountDetails> itemsAmountDetailsMap =new HashMap<>();
-
+    private Map<Item, ItemAmountDetails> itemsAmountDetailsMap = new HashMap<>();
 
     public List<User> getUserList() {
         return users;
     }
 
-    public Map<Item,ItemAmountDetails> itemsAmountDetailsMap() {
-        return itemsAmountDetailsMap;}
+    public Map<Item, ItemAmountDetails> itemsAmountDetailsMap() {
+        return itemsAmountDetailsMap;
+    }
 
     public void addUserToLibrary(User... users) {
         Collections.addAll(this.users, users);
     }
 
-    public void addItemToLibrary (Item... items){
+    public void addItemToLibrary(Item... items) {
 
-        for (Item item: items)
-        {
-            if(itemsAmountDetailsMap.size() == 0) {
+        for (Item item : items) {
+            if (itemsAmountDetailsMap.size() == 0) {
                 ItemAmountDetails itemDetails = new ItemAmountDetails();
                 itemsAmountDetailsMap.put(item, itemDetails);
-            }
-            else
-            {
-                boolean isItemInMap=false;
-                for (Map.Entry<Item, ItemAmountDetails> entry : itemsAmountDetailsMap.entrySet())
-                {
-                    if(entry.getKey().equals(item))
-                    {
+            } else {
+                boolean isItemInMap = false;
+                for (Map.Entry<Item, ItemAmountDetails> entry : itemsAmountDetailsMap.entrySet()) {
+                    if (entry.getKey().equals(item)) {
                         entry.getValue().increaseQuantity();
-                        isItemInMap=true;
+                        isItemInMap = true;
                         break;
                     }
                 }
-                if(!isItemInMap)
-                {
+                if (!isItemInMap) {
                     ItemAmountDetails itemDetails = new ItemAmountDetails();
                     itemsAmountDetailsMap.put(item, itemDetails);
                 }
@@ -52,19 +46,18 @@ public class Library {
         }
     }
 
-    public boolean rentItemToUser(Item item,User user) {
+    public boolean rentItemToUser(Item item, User user) {
 
         if (canRent(item, user)) {
             user.rent(item);
             itemsAmountDetailsMap.get(item).decreaseCurrentQuantity();
             return true;
-        }
-        else
+        } else
             return false;
     }
 
     private boolean canBeRented(Item item) {
-        return (itemsAmountDetailsMap.get(item).getCurrentQuantity()>0);
+        return (itemsAmountDetailsMap.get(item).getCurrentQuantity() > 0);
     }
 
     private boolean canRent(Item item, User user) {
@@ -73,8 +66,7 @@ public class Library {
 
     public Item convertItemFromListToHashMap(Item item) {
         for (Map.Entry<Item, ItemAmountDetails> entry : itemsAmountDetailsMap.entrySet()) {
-            if(entry.getKey().equals(item))
-            {
+            if (entry.getKey().equals(item)) {
                 return entry.getKey();
             }
         }
@@ -82,31 +74,28 @@ public class Library {
     }
 
 
-
     public void printListOfMagazines() {
 
-        for(Map.Entry<Item, ItemAmountDetails> entry : itemsAmountDetailsMap.entrySet()) {
+        for (Map.Entry<Item, ItemAmountDetails> entry : itemsAmountDetailsMap.entrySet()) {
             Item item = entry.getKey();
             Integer currentQuantity = entry.getValue().getCurrentQuantity();
             Integer totalQuantity = entry.getValue().getTotalQuantity();
 
-            if(item instanceof Magazine)
-            {
-                System.out.println(item.getTitle() + ";" + ((Magazine) item).getNumber() + ";"+totalQuantity+";"+currentQuantity);
+            if (item instanceof Magazine) {
+                System.out.println(item.getTitle() + ";" + ((Magazine) item).getNumber() + ";" + totalQuantity + ";" + currentQuantity);
             }
         }
     }
 
     public void printListOfBooks() {
 
-        for(Map.Entry<Item, ItemAmountDetails> entry : itemsAmountDetailsMap.entrySet()) {
+        for (Map.Entry<Item, ItemAmountDetails> entry : itemsAmountDetailsMap.entrySet()) {
             Item item = entry.getKey();
             Integer currentQuantity = entry.getValue().getCurrentQuantity();
             Integer totalQuantity = entry.getValue().getTotalQuantity();
 
-            if(item instanceof Book)
-            {
-                System.out.println(item.getTitle() + ";" + ((Book) item).getAuthor() + ";"+totalQuantity+";"+currentQuantity);
+            if (item instanceof Book) {
+                System.out.println(item.getTitle() + ";" + ((Book) item).getAuthor() + ";" + totalQuantity + ";" + currentQuantity);
             }
         }
     }
@@ -118,61 +107,47 @@ public class Library {
     }
 
 
+    public void printListOfRentedItems() {
+        for (User user : users) {
+            String rentedItemsInfoFull = "";
+            String itemInfoMain = "";
 
-    public void printListOfRentedItems()
-    {
-        for (User user: users)
-        {
-            String rentedItemsInfoFull="";
-            String itemInfoMain="";
-
-            if(user.rentedItems.stream().count() ==0) return;
-            else
-            {
-                rentedItemsInfoFull = "ID"+user.getLibraryCardIndex() + " [";
-                for (Item item : user.rentedItems)
-                {
-                    if(item instanceof Book)
-                    {
-                        String itemInfo= item.getTitle()+"-"+((Book) item).getAuthor()+" ";
-                        itemInfoMain=itemInfoMain+itemInfo;
-                    }
-                    else
-                    {
-                        String itemInfo= item.getTitle()+"-"+((Magazine) item).getNumber()+" ";
-                        itemInfoMain=itemInfoMain+itemInfo;
+            if (user.rentedItems.stream().count() == 0) return;
+            else {
+                rentedItemsInfoFull = "ID" + user.getLibraryCardIndex() + " [";
+                for (Item item : user.rentedItems) {
+                    if (item instanceof Book) {
+                        String itemInfo = item.getTitle() + "-" + ((Book) item).getAuthor() + " ";
+                        itemInfoMain = itemInfoMain + itemInfo;
+                    } else {
+                        String itemInfo = item.getTitle() + "-" + ((Magazine) item).getNumber() + " ";
+                        itemInfoMain = itemInfoMain + itemInfo;
                     }
                 }
-                rentedItemsInfoFull=rentedItemsInfoFull+itemInfoMain;
+                rentedItemsInfoFull = rentedItemsInfoFull + itemInfoMain;
             }
             System.out.println(rentedItemsInfoFull);
         }
     }
 
-    public String exportUsersWithItemsToFile(User user)
-    {
-        StringBuilder rentedItemsInfoFull=new StringBuilder();
+    public String exportUsersWithItemsToFile(User user) {
+        StringBuilder rentedItemsInfoFull = new StringBuilder();
 
-        String itemInfoMain="";
+        String itemInfoMain = "";
 
-        if(user.rentedItems.stream().count() !=0)
-        {
-            rentedItemsInfoFull.append("ID"+user.getLibraryCardIndex() + " [");
-            for (Item item : user.rentedItems)
-            {
-                if(item instanceof Book)
-                {
-                    String itemInfo= " "+item.getTitle()+"-"+((Book) item).getAuthor()+";";
-                    itemInfoMain=itemInfoMain+itemInfo;
-                }
-                else
-                {
-                    String itemInfo= " "+item.getTitle()+"-"+((Magazine) item).getNumber()+";";
-                    itemInfoMain=itemInfoMain+itemInfo;
+        if (user.rentedItems.stream().count() != 0) {
+            rentedItemsInfoFull.append("ID" + user.getLibraryCardIndex() + " [");
+            for (Item item : user.rentedItems) {
+                if (item instanceof Book) {
+                    String itemInfo = " " + item.getTitle() + "-" + ((Book) item).getAuthor() + ";";
+                    itemInfoMain = itemInfoMain + itemInfo;
+                } else {
+                    String itemInfo = " " + item.getTitle() + "-" + ((Magazine) item).getNumber() + ";";
+                    itemInfoMain = itemInfoMain + itemInfo;
                 }
             }
-            rentedItemsInfoFull.append(rentedItemsInfoFull+itemInfoMain);
-            rentedItemsInfoFull.deleteCharAt(rentedItemsInfoFull.length()-1).append("]");
+            rentedItemsInfoFull.append(rentedItemsInfoFull + itemInfoMain);
+            rentedItemsInfoFull.deleteCharAt(rentedItemsInfoFull.length() - 1).append("]");
         }
         return rentedItemsInfoFull.toString();
     }
@@ -192,15 +167,14 @@ public class Library {
         }
     }
 
-    public void exportUsersWithItemsToFile(String csvFile)
-    {
+    public void exportUsersWithItemsToFile(String csvFile) {
         getUserList();
 
         try {
             FileWriter myWriter = new FileWriter(csvFile);
             for (User user : getUserList()) {
-                if(!exportUsersWithItemsToFile(user).equals(""))
-                    myWriter.write(exportUsersWithItemsToFile(user)+ "\r\n");
+                if (!exportUsersWithItemsToFile(user).equals(""))
+                    myWriter.write(exportUsersWithItemsToFile(user) + "\r\n");
             }
             myWriter.close();
 
@@ -210,8 +184,7 @@ public class Library {
         }
     }
 
-    public void importItemsFromFile(String csvFile)
-    {
+    public void importItemsFromFile(String csvFile) {
         try {
             File myObj = new File(csvFile);
             Scanner myReader = new Scanner(myObj);
@@ -229,10 +202,9 @@ public class Library {
         }
     }
 
-    public void importItemsFromFile(String[]lines)
-    {
+    public void importItemsFromFile(String[] lines) {
         String title = lines[0];
-        Boolean isItemOnList=false;
+        Boolean isItemOnList = false;
 
         if (lines[3].charAt(0) == 'B') {
             String author = lines[1];
@@ -241,40 +213,34 @@ public class Library {
             Book book = new Book(title, author);
 
             for (Map.Entry<Item, ItemAmountDetails> entry : itemsAmountDetailsMap().entrySet()) {
-                if(entry.getKey().equals(book))
-                {
+                if (entry.getKey().equals(book)) {
                     entry.getValue().increaseQuantity(quantity);
-                    isItemOnList=true;
+                    isItemOnList = true;
                     break;
                 }
             }
-            if(!isItemOnList)
-            {
-                ItemAmountDetails itemDetails = new ItemAmountDetails(quantity,quantity);
-                itemsAmountDetailsMap().put(book,itemDetails);
+            if (!isItemOnList) {
+                ItemAmountDetails itemDetails = new ItemAmountDetails(quantity, quantity);
+                itemsAmountDetailsMap().put(book, itemDetails);
             }
-        }
-        else if (lines[3].charAt(0) == 'M') {
+        } else if (lines[3].charAt(0) == 'M') {
             String number = lines[1];
             int quantity = Integer.valueOf(lines[2]);
 
             Magazine magazine = new Magazine(title, number);
 
             for (Map.Entry<Item, ItemAmountDetails> entry : itemsAmountDetailsMap().entrySet()) {
-                if(entry.getKey().equals(magazine))
-                {
+                if (entry.getKey().equals(magazine)) {
                     entry.getValue().increaseQuantity(quantity);
-                    isItemOnList=true;
+                    isItemOnList = true;
                     break;
                 }
             }
-            if(!isItemOnList)
-            {
+            if (!isItemOnList) {
                 ItemAmountDetails itemDetails = new ItemAmountDetails(quantity, quantity);
                 itemsAmountDetailsMap().put(magazine, itemDetails);
             }
-        }
-        else {
+        } else {
             System.out.println("Błędny plik");
         }
     }

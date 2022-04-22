@@ -15,7 +15,6 @@ public class Runner {
 
         library.addUserToLibrary(user, student1, student2, lecturer, lecturer1);
 
-
         System.out.println("");
         library.importItemsFromFile("ItemList.txt");
         library.addItemToLibrary(new Book("Potop", "H. Sienkiewicz"), new Book("Kosmodupa", "L.Koczkodan"));
