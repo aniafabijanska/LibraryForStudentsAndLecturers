@@ -1,5 +1,10 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 import java.util.Collections;
+import java.util.regex.Pattern;
 
 public class Library {
 
@@ -44,16 +49,18 @@ public class Library {
                     itemsAmountDetailsMap.put(item, itemDetails);
                 }
             }
-
         }
     }
 
-    public void rentItemToUser(User user, Item item) {
+    public boolean rentItemToUser(Item item,User user) {
 
         if (canRent(item, user)) {
             user.rent(item);
             itemsAmountDetailsMap.get(item).decreaseCurrentQuantity();
+            return true;
         }
+        else
+            return false;
     }
 
     private boolean canBeRented(Item item) {
@@ -169,4 +176,109 @@ public class Library {
         }
         return rentedItemsInfoFull.toString();
     }
+
+
+    //TEST
+
+    public static void createUserListFile() {
+        try {
+            File myObj = new File("UserList.txt");
+            if (myObj.createNewFile()) {
+                System.out.println("File created: " + myObj.getName());
+            } else {
+                System.out.println("File already exists.");
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }
+
+    public void exportUsersWithItemsToFile(String csvFile)
+    {
+        getUserList();
+
+        try {
+            FileWriter myWriter = new FileWriter(csvFile);
+            for (User user : getUserList()) {
+                if(!exportUsersWithItemsToFile(user).equals(""))
+                    myWriter.write(exportUsersWithItemsToFile(user)+ "\r\n");
+            }
+            myWriter.close();
+
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }
+
+    public void importItemsFromFile(String csvFile)
+    {
+        try {
+            File myObj = new File(csvFile);
+            Scanner myReader = new Scanner(myObj);
+            while (myReader.hasNextLine()) {
+                String line = myReader.nextLine();
+
+                String[] parts = line.split(Pattern.quote(";"));
+
+                importItemsFromFile(parts);
+            }
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }
+
+    public void importItemsFromFile(String[]lines)
+    {
+        String title = lines[0];
+        Boolean isItemOnList=false;
+
+        if (lines[3].charAt(0) == 'B') {
+            String author = lines[1];
+            int quantity = Integer.valueOf(lines[2]);
+
+            Book book = new Book(title, author);
+
+            for (Map.Entry<Item, ItemAmountDetails> entry : itemsAmountDetailsMap().entrySet()) {
+                if(entry.getKey().equals(book))
+                {
+                    entry.getValue().increaseQuantity(quantity);
+                    isItemOnList=true;
+                    break;
+                }
+            }
+            if(!isItemOnList)
+            {
+                ItemAmountDetails itemDetails = new ItemAmountDetails(quantity,quantity);
+                itemsAmountDetailsMap().put(book,itemDetails);
+            }
+        }
+        else if (lines[3].charAt(0) == 'M') {
+            String number = lines[1];
+            int quantity = Integer.valueOf(lines[2]);
+
+            Magazine magazine = new Magazine(title, number);
+
+            for (Map.Entry<Item, ItemAmountDetails> entry : itemsAmountDetailsMap().entrySet()) {
+                if(entry.getKey().equals(magazine))
+                {
+                    entry.getValue().increaseQuantity(quantity);
+                    isItemOnList=true;
+                    break;
+                }
+            }
+            if(!isItemOnList)
+            {
+                ItemAmountDetails itemDetails = new ItemAmountDetails(quantity, quantity);
+                itemsAmountDetailsMap().put(magazine, itemDetails);
+            }
+        }
+        else {
+            System.out.println("Błędny plik");
+        }
+    }
 }
+
