@@ -11,7 +11,7 @@ public class Library {
     private List<User> users = new ArrayList<>();
     private Map<Item,ItemAmountDetails> itemsAmountDetailsMap =new HashMap<>();
 
-    //GETTERS
+
     public List<User> getUserList() {
         return users;
     }
@@ -81,7 +81,7 @@ public class Library {
         return null;
     }
 
-    //PRINT LISTS METHODS
+
 
     public void printListOfMagazines() {
 
@@ -118,7 +118,7 @@ public class Library {
     }
 
 
-    //METODA OPCJONALNIE DO SPRAWDZENIA CZY WSZYSTKO DZIAŁA
+
     public void printListOfRentedItems()
     {
         for (User user: users)
@@ -177,8 +177,6 @@ public class Library {
         return rentedItemsInfoFull.toString();
     }
 
-
-    //TEST
 
     public static void createUserListFile() {
         try {
