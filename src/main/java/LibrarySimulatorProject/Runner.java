@@ -14,8 +14,8 @@ public class Runner {
         library.createUserListFile();
 
         User user = new Student("Adam", "Kowalski");
-        User student1 = new Student("Ewa", "Kowalska");
-        User student2 = new Student("Kajetan", "Kormoran");
+        User student1 = new Student("Adam", "Kowalski");
+        User student2 = new Student("Adam", "Kowalski");
         User lecturer = new Lecturer("Asia", "Kowalska");
         User lecturer1 = new Lecturer("Magda", "Kowalska");
 
@@ -32,13 +32,13 @@ public class Runner {
         Book test3 = new Book("Ogniem i mieczem", "H. Sienkiewicz");
 
         library.rentItemToUser(test2, library.getUserList().get(0));
+        library.rentItemToUser(test3, library.getUserList().get(2));
+        library.rentItemToUser(test1, library.getUserList().get(1));
         library.rentItemToUser(test3, library.getUserList().get(3));
-        library.rentItemToUser(test1, library.getUserList().get(0));
-        library.rentItemToUser(test3, library.getUserList().get(0));
-        library.rentItemToUser(test3, library.getUserList().get(0));
-        library.rentItemToUser(test3, library.getUserList().get(0));
-        library.rentItemToUser(test3, library.getUserList().get(0));
-        library.rentItemToUser(test2, library.getUserList().get(0));
+        library.rentItemToUser(test3, library.getUserList().get(1));
+        library.rentItemToUser(test3, library.getUserList().get(3));
+        library.rentItemToUser(test3, library.getUserList().get(1));
+        library.rentItemToUser(test2, library.getUserList().get(2));
 
         System.out.println(" ");
         library.printListOfUsers();

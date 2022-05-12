@@ -1,2 +1,4 @@
-ID0 [ID0 [ Kosmodupa-L.Koczkodan; Potop-H. Sienkiewicz; Ogniem i mieczem-H. Sienkiewicz; Ogniem i mieczem-H. Sienkiewicz]
-ID3 [ID3 [ Ogniem i mieczem-H. Sienkiewicz]
+0[Kosmodupa-L.Koczkodan]
+1[Potop-H. Sienkiewicz][Ogniem i mieczem-H. Sienkiewicz][Ogniem i mieczem-H. Sienkiewicz]
+2[Ogniem i mieczem-H. Sienkiewicz]
+3[Ogniem i mieczem-H. Sienkiewicz][Ogniem i mieczem-H. Sienkiewicz]

@@ -71,14 +71,6 @@ public class Library {
         return (canBeRented(item) && user.canRent());
     }
 
-    public Item convertItemFromListToHashMap(Item item) {
-        for (Map.Entry<Item, ItemAmountDetails> entry : itemsAmountDetailsMap.entrySet()) {
-            if (entry.getKey().equals(item)) {
-                return entry.getKey();
-            }
-        }
-        return null;
-    }
 
 
     public void printListOfMagazines() {
@@ -124,20 +116,21 @@ public class Library {
                 rentedItemsInfoFull = "ID" + user.getLibraryCardIndex() + " [";
                 for (Item item : user.rentedItems) {
                     if (item instanceof Book) {
-                        String itemInfo = item.getTitle() + "-" + ((Book) item).getAuthor() + " ";
+                        String itemInfo = item.getTitle() + "-" + ((Book) item).getAuthor() + "; ";
                         itemInfoMain = itemInfoMain + itemInfo;
                     } else {
-                        String itemInfo = item.getTitle() + "-" + ((Magazine) item).getNumber() + " ";
+                        String itemInfo = item.getTitle() + "-" + ((Magazine) item).getNumber() + " ]";
                         itemInfoMain = itemInfoMain + itemInfo;
                     }
                 }
                 rentedItemsInfoFull = rentedItemsInfoFull + itemInfoMain;
+
             }
-            System.out.println(rentedItemsInfoFull);
+            System.out.println(rentedItemsInfoFull + "]");
         }
     }
 
-    public String exportUsersWithItemsToFile(User user) {
+   /* public String exportUsersWithItemsToFile(User user) {
         StringBuilder rentedItemsInfoFull = new StringBuilder();
 
         String itemInfoMain = "";
@@ -149,7 +142,7 @@ public class Library {
                     String itemInfo = " " + item.getTitle() + "-" + ((Book) item).getAuthor() + ";";
                     itemInfoMain = itemInfoMain + itemInfo;
                 } else {
-                    String itemInfo = " " + item.getTitle() + "-" + ((Magazine) item).getNumber() + ";";
+                    String itemInfo = " " + item.getTitle() + "-" + ((Magazine) item).getNumber() + "]";
                     itemInfoMain = itemInfoMain + itemInfo;
                 }
             }
@@ -157,7 +150,23 @@ public class Library {
             rentedItemsInfoFull.deleteCharAt(rentedItemsInfoFull.length() - 1).append("]");
         }
         return rentedItemsInfoFull.toString();
-    }
+    }*/
+   public String exportUsersWithItemsToFile(User user) {
+       StringBuilder itemInfoMain = new StringBuilder();
+       if ((long) user.rentedItems.size() != 0) {
+           itemInfoMain.append(user.getLibraryCardIndex());
+           for (Item item : user.rentedItems) {
+               String itemInfo;
+               if (item instanceof Book) {
+                   itemInfo = item.getTitle() + "-" + ((Book) item).getAuthor() + ";";
+               } else {
+                   itemInfo = item.getTitle() + "-" + ((Magazine) item).getNumber() + ";";
+               }
+               itemInfoMain.append("[").append(itemInfo).deleteCharAt(itemInfoMain.length() - 1).append("]");
+           }
+       }
+       return itemInfoMain.toString();
+   }
 
 
     public static void createUserListFile() {

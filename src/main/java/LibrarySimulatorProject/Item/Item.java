@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class Item implements Comparator<Item> {
 
-    public String title;
+    private String title;
 
     public Item(String title) {
         this.title = title;

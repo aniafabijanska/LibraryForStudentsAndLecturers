@@ -1,7 +1,14 @@
 Ogniem i mieczem;H. Sienkiewicz;20;B
 Tożsamość Bourne’a;R. Ludlum;10;B
 Gra o tron;George’a R.R. Martin;15;B
-National Geographic;01/2016;15;M
+National Geographic;02/2016;15;M
+Ogniem i mieczem;H. Sienkiewicz;20;B
+Tożsamość Bourne’a;R. Ludlum;10;B
+Gra o tron;George’a R.R. Martin;15;B
+National Geographic;01/2017;15;M
+Ogniem i sierpem;H. Sienkiewicz;20;B
+Tożsamość Juniora;R. Ludlum;10;B
+Gra o chrom;George’a R.R. Martin;15;B
 Ogniem i mieczem;H. Sienkiewicz;20;B
 Tożsamość Bourne’a;R. Ludlum;10;B
 Gra o tron;George’a R.R. Martin;15;B
@@ -9,12 +16,4 @@ National Geographic;01/2016;15;M
 Ogniem i mieczem;H. Sienkiewicz;20;B
 Tożsamość Bourne’a;R. Ludlum;10;B
 Gra o tron;George’a R.R. Martin;15;B
-National Geographic;01/2016;15;M
-Ogniem i mieczem;H. Sienkiewicz;20;B
-Tożsamość Bourne’a;R. Ludlum;10;B
-Gra o tron;George’a R.R. Martin;15;B
-National Geographic;01/2016;15;M
-Ogniem i mieczem;H. Sienkiewicz;20;B
-Tożsamość Bourne’a;R. Ludlum;10;B
-Gra o tron;George’a R.R. Martin;15;B
-National Geographic;01/2016;15;M
+National Geographic;03/2016;15;M
