@@ -1,3 +1,10 @@
+package LibrarySimulatorProject;
+
+import LibrarySimulatorProject.Item.Book;
+import LibrarySimulatorProject.Item.Item;
+import LibrarySimulatorProject.Item.Magazine;
+import LibrarySimulatorProject.User.User;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -46,7 +53,7 @@ public class Library {
         }
     }
 
-    public boolean rentItemToUser(Item item, User user) {
+    public boolean rentItemToUser(Book item, User user) {
 
         if (canRent(item, user)) {
             user.rent(item);

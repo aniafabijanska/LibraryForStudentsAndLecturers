@@ -1,3 +1,4 @@
+package LibrarySimulatorProject;
 
 public class ItemAmountDetails {
     private int totalQuantity;

@@ -1,3 +1,5 @@
+package LibrarySimulatorProject.Item;
+
 public class Magazine extends Item {
 
     protected String number;

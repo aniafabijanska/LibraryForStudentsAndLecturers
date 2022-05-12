@@ -1,3 +1,5 @@
+package LibrarySimulatorProject.Item;
+
 public class Book extends Item {
 
     private String author;

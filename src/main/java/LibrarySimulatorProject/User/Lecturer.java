@@ -1,3 +1,5 @@
+package LibrarySimulatorProject.User;
+
 public class Lecturer extends User {
     public Lecturer(String firstName, String lastName) {
 

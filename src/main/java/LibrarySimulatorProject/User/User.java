@@ -1,3 +1,7 @@
+package LibrarySimulatorProject.User;
+
+import LibrarySimulatorProject.Item.Item;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +13,7 @@ public abstract class User {
     protected int libraryCardIndex;
     protected char isStudentOrLecturer;
 
-    protected List<Item> rentedItems = new ArrayList<>();
+    public List<Item> rentedItems = new ArrayList<>();
     protected int rentItemsLimit;
 
     public User(String firstName, String lastName) {

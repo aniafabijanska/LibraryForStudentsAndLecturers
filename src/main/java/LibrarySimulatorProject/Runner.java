@@ -1,3 +1,9 @@
+package LibrarySimulatorProject;
+
+import LibrarySimulatorProject.Item.Book;
+import LibrarySimulatorProject.User.Lecturer;
+import LibrarySimulatorProject.User.Student;
+import LibrarySimulatorProject.User.User;
 
 public class Runner {
 
@@ -16,7 +22,7 @@ public class Runner {
         library.addUserToLibrary(user, student1, student2, lecturer, lecturer1);
 
         System.out.println("");
-        library.importItemsFromFile("ItemList.txt");
+        library.importItemsFromFile("src/main/java/LibrarySimulatorProject/User/Files/ItemList.txt");
         library.addItemToLibrary(new Book("Potop", "H. Sienkiewicz"), new Book("Kosmodupa", "L.Koczkodan"));
         library.addItemToLibrary(new Book("Potop", "H. Sienkiewicz"));
         library.addItemToLibrary(new Book("Ogniem i mieczem", "H. Sienkiewicz"));
@@ -43,7 +49,7 @@ public class Runner {
         System.out.println(" ");
         library.printListOfRentedItems();
 
-        library.exportUsersWithItemsToFile("UserList.txt");
+        library.exportUsersWithItemsToFile("src/main/java/LibrarySimulatorProject/User/Files/UserList.txt");
 
     }
 }
