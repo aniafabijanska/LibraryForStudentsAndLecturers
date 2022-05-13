@@ -68,10 +68,12 @@ public class Library {
     }
 
     private boolean canRent(Item item, User user) {
-        return (canBeRented(item) && user.canRent());
+        if (item == null || user == null) {
+            return false;
+        } else {
+            return (canBeRented(item) && user.canRent());
+        }
     }
-
-
 
     public void printListOfMagazines() {
 
@@ -108,65 +110,47 @@ public class Library {
 
     public void printListOfRentedItems() {
         for (User user : users) {
-            String rentedItemsInfoFull = "";
-            String itemInfoMain = "";
 
+            String itemInfoMain = "";
+            StringBuilder rentedItemsInfoFull;
             if (user.rentedItems.stream().count() == 0) return;
+
             else {
-                rentedItemsInfoFull = "ID" + user.getLibraryCardIndex() + " [";
+                rentedItemsInfoFull = new StringBuilder("ID" + user.getLibraryCardIndex() + " [");
                 for (Item item : user.rentedItems) {
                     if (item instanceof Book) {
                         String itemInfo = item.getTitle() + "-" + ((Book) item).getAuthor() + "; ";
                         itemInfoMain = itemInfoMain + itemInfo;
                     } else {
-                        String itemInfo = item.getTitle() + "-" + ((Magazine) item).getNumber() + " ]";
+                        String itemInfo = item.getTitle() + "-" + ((Magazine) item).getNumber() + "";
                         itemInfoMain = itemInfoMain + itemInfo;
                     }
                 }
-                rentedItemsInfoFull = rentedItemsInfoFull + itemInfoMain;
+                rentedItemsInfoFull.append(itemInfoMain);
+                rentedItemsInfoFull.deleteCharAt(rentedItemsInfoFull.length() - 1).append("");
 
             }
             System.out.println(rentedItemsInfoFull + "]");
         }
     }
 
-   /* public String exportUsersWithItemsToFile(User user) {
-        StringBuilder rentedItemsInfoFull = new StringBuilder();
+    public String exportUsersWithItemsToFile(User user) {
+        StringBuilder itemInfoMain = new StringBuilder();
+        if ((long) user.rentedItems.size() != 0) {
+            itemInfoMain.append("ID" + user.getLibraryCardIndex());
 
-        String itemInfoMain = "";
-
-        if (user.rentedItems.stream().count() != 0) {
-            rentedItemsInfoFull.append("ID" + user.getLibraryCardIndex() + " [");
             for (Item item : user.rentedItems) {
+                String itemInfo;
                 if (item instanceof Book) {
-                    String itemInfo = " " + item.getTitle() + "-" + ((Book) item).getAuthor() + ";";
-                    itemInfoMain = itemInfoMain + itemInfo;
+                    itemInfo = item.getTitle() + "-" + ((Book) item).getAuthor() + ";";
                 } else {
-                    String itemInfo = " " + item.getTitle() + "-" + ((Magazine) item).getNumber() + "]";
-                    itemInfoMain = itemInfoMain + itemInfo;
+                    itemInfo = item.getTitle() + "-" + ((Magazine) item).getNumber() + ";";
                 }
+                itemInfoMain.append("[").append(itemInfo).deleteCharAt(itemInfoMain.length() - 1).append("]");
             }
-            rentedItemsInfoFull.append(rentedItemsInfoFull + itemInfoMain);
-            rentedItemsInfoFull.deleteCharAt(rentedItemsInfoFull.length() - 1).append("]");
         }
-        return rentedItemsInfoFull.toString();
-    }*/
-   public String exportUsersWithItemsToFile(User user) {
-       StringBuilder itemInfoMain = new StringBuilder();
-       if ((long) user.rentedItems.size() != 0) {
-           itemInfoMain.append(user.getLibraryCardIndex());
-           for (Item item : user.rentedItems) {
-               String itemInfo;
-               if (item instanceof Book) {
-                   itemInfo = item.getTitle() + "-" + ((Book) item).getAuthor() + ";";
-               } else {
-                   itemInfo = item.getTitle() + "-" + ((Magazine) item).getNumber() + ";";
-               }
-               itemInfoMain.append("[").append(itemInfo).deleteCharAt(itemInfoMain.length() - 1).append("]");
-           }
-       }
-       return itemInfoMain.toString();
-   }
+        return itemInfoMain.toString();
+    }
 
 
     public static void createUserListFile() {

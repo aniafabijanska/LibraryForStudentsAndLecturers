@@ -6,7 +6,7 @@ public class Magazine extends Item {
 
     private String number;
 
-    public Magazine(String title, String number) {
+    public Magazine(String number, String title) {
         super(title);
         this.number = number;
     }
